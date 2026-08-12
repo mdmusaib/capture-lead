@@ -1,0 +1,14 @@
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {RootNavigator} from './src/navigation/RootNavigator';
+import {StatusBar} from 'react-native';
+import {COLORS} from './src/constants/theme';
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+      <RootNavigator />
+    </NavigationContainer>
+  );
+}
