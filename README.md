@@ -36,11 +36,3 @@ Push to `main` or run the workflow manually from GitHub Actions. The generated A
 
 ## Design
 The UI follows the supplied references: warm cream background, brown/gold accent, rounded cards, dark focus-mode screens, bottom navigation, and compact lead-capture forms.
-
-## GitHub Actions APK build
-
-This project is configured to build the Android release APK entirely on GitHub Actions. You do **not** need Android Studio or the Android SDK installed on your Mac for the CI build.
-
-GitHub Actions installs Node 20, Java 17, Android SDK components, and Gradle 8.10.2, then runs `gradle -p android assembleRelease` and uploads the APK as a workflow artifact.
-
-Run: **GitHub → Actions → Build Android APK → Run workflow**.

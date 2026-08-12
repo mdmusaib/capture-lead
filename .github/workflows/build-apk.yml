@@ -5,17 +5,11 @@ on:
   push:
     branches: [main, master]
 
-permissions:
-  contents: read
-
 jobs:
-  build-apk:
-    name: Build Release APK
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,41 +26,21 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install required Android SDK components
-        run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0" "ndk;27.0.12077973"
-
-      - name: Install JavaScript dependencies
-        run: npm install --no-audit --no-fund
+      - name: Install dependencies
+        run: npm install
 
       - name: Setup Gradle 8.10.2
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.10.2'
+          gradle-version: 8.10.2
 
-      - name: Verify toolchain
-        run: |
-          node --version
-          npm --version
-          java -version
-          gradle --version
-          adb version
-
-      - name: Clean Android build
-        run: gradle -p android clean
-
-      - name: Build Release APK
-        run: gradle -p android assembleRelease --stacktrace --no-daemon
-
-      - name: Verify APK exists
-        run: |
-          test -f android/app/build/outputs/apk/release/app-release.apk
-          ls -lh android/app/build/outputs/apk/release/app-release.apk
+      - name: Build release APK
+        working-directory: android
+        run: gradle assembleRelease --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: lead-capture-app-part1-release
-          path: android/app/build/outputs/apk/release/app-release.apk
+          name: lead-capture-app-release
+          path: android/app/build/outputs/apk/release/*.apk
           if-no-files-found: error

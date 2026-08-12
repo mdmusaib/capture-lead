@@ -8,8 +8,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "build:android": "gradle -p android assembleRelease",
-    "build:android:ci": "gradle -p android assembleRelease --stacktrace --no-daemon"
+    "build:android": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.2",
@@ -45,7 +44,5 @@
     "react-test-renderer": "19.0.0",
     "typescript": "5.0.4"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  "engines": { "node": ">=18" }
 }
